@@ -50,7 +50,7 @@ let displayCart = (foods) => {
 
         div.innerHTML = `
         
-        <div class="p-5 bg-white flex gap-3 shadow rounded-xl">
+        <div class="p-5 bg-white flex gap-3 shadow-xl rounded-xl">
             <div class="img flex-1">
               <img
                 src="${food.foodImg}"
