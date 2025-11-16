@@ -1,24 +1,81 @@
 
 
 let loadCategory = () => {
-    fetch(" https://taxi-kitchen-api.vercel.app/api/v1/categories")
-        .then(res => res.json())
-        .then(json => {
-            // console.log(json.categories)
-            displayCategory(json.categories);
-        })
+  fetch(" https://taxi-kitchen-api.vercel.app/api/v1/categories")
+    .then(res => res.json())
+    .then(json => {
+      // console.log(json.categories)
+      displayCategory(json.categories);
+    })
 }
+
+// Category Id
+
+let loadCategoryId = (id) => {
+  fetch(`https://taxi-kitchen-api.vercel.app/api/v1/categories/${id}`)
+    .then(res => res.json())
+    .then(json => {
+      // console.log(json.foods)
+      displayCategoryId(json.foods);
+    })
+}
+
+let displayCategoryId = (categoryIds) => {
+  let foodContainer = document.getElementById("food-container");
+  foodContainer.innerHTML = "";
+
+  categoryIds.forEach((categoryId) => {
+
+    let div = document.createElement("div");
+
+    div.innerHTML = `
+     <div class="p-5 bg-white flex gap-3 shadow-xl rounded-xl">
+            <div class="img flex-1">
+              <img
+                src="${categoryId.foodImg}"
+                alt=""
+                class="w-[160px] rounded-xl h-[160px] object-cover"
+              />
+            </div>
+            <div class="flex-2">
+              <h1 class="text-xl font-bold">
+                ${categoryId.title}
+              </h1>
+
+              <div class="badge badge-warning">${categoryId.category}</div>
+
+              <div class="divider divider-end">
+                <h2 class="text-yellow-600 font-semibold">
+                  $ <span class="price">${categoryId.price}</span> BDT
+                </h2>
+              </div>
+
+              <button class="btn btn-warning">
+                <i class="fa-solid fa-square-plus"></i>
+                Add This Item
+              </button>
+            </div>
+          </div>
+    `
+    foodContainer.append(div);
+
+  })
+}
+
+loadCategoryId();
+
+
 
 let displayCategory = (categories) => {
 
-    let categoryContainer = document.getElementById("category-container");
+  let categoryContainer = document.getElementById("category-container");
 
-    categories.forEach((category) => {
+  categories.forEach((category) => {
 
-        let btn = document.createElement("button");
+    let btn = document.createElement("button");
 
-        btn.innerHTML = `
-        <button class="btn btn-block shadow btn-category">
+    btn.innerHTML = `
+        <button onclick="loadCategoryId(${category.id})" class="btn btn-block shadow btn-category">
             <img
               src="${category.categoryImg}"
               alt=""
@@ -26,29 +83,30 @@ let displayCategory = (categories) => {
             />${category.categoryName}
           </button>
         `
-        categoryContainer.append(btn)
-    })
+    categoryContainer.append(btn)
+  })
 }
 
 
 let loadCart = () => {
-    fetch("https://taxi-kitchen-api.vercel.app/api/v1/foods/random")
-        .then(res => res.json())
-        .then(json => {
-            // console.log(json.foods)
-            displayCart(json.foods);
-        })
+  fetch("https://taxi-kitchen-api.vercel.app/api/v1/foods/random")
+    .then(res => res.json())
+    .then(json => {
+      // console.log(json.foods)
+      displayCart(json.foods);
+    })
 }
 
 let displayCart = (foods) => {
 
-    let foodContainer = document.getElementById("food-container");
+  let foodContainer = document.getElementById("food-container");
+  foodContainer.innerHTML = "";
 
-    foods.forEach((food) => {
+  foods.forEach((food) => {
 
-        let div = document.createElement("div");
+    let div = document.createElement("div");
 
-        div.innerHTML = `
+    div.innerHTML = `
         
         <div class="p-5 bg-white flex gap-3 shadow-xl rounded-xl">
             <div class="img flex-1">
@@ -79,9 +137,9 @@ let displayCart = (foods) => {
           </div>
 
         `
-        foodContainer.append(div)
+    foodContainer.append(div)
 
-    })
+  })
 }
 
 loadCart();
